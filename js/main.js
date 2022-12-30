@@ -5,6 +5,7 @@ const elList = document.querySelector(".js-list");
 const todos = [];
 
 const render = (arr, node) => {
+  elList.innerHTML = "";
   for (i of arr) {
     const newItem = document.createElement("li");
     const newBox = document.createElement("div");
@@ -42,7 +43,6 @@ elForm.addEventListener("submit", (evt) => {
     .then((response) => response.json())
     .then((data) => {
       if (data) {
-        console.log(data);
         render(data.Search, elList);
       }
     });
