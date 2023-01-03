@@ -20,13 +20,16 @@
     "
   >
     <div class="container">
-      <form class="js-form bg-primary mx-auto my-5 p-5 w-50 rounded-3">
+      <form class="js-form bg-warning mx-auto my-5 p-5 w-50 rounded-3">
         <h1 class="text-center text-light mb-5">Movies</h1>
-        <input
-          class="js-input form-control w-50 mx-auto"
-          type="text"
-          placeholder="Search movies"
-        />
+        <div class="input-group">
+          <input
+            class="js-input form-control w-50 mx-auto"
+            type="text"
+            placeholder="Search movies"
+          />
+          <button class="btn btn-primary">Send</button>
+        </div>
       </form>
       <ul class="js-list list-unstyled row g-5"></ul>
     </div>
