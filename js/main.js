@@ -4,6 +4,8 @@ const elList = document.querySelector(".js-list");
 
 const todos = [];
 
+let activePage = 1;
+
 const render = (arr, node) => {
   elList.innerHTML = "";
   for (i of arr) {
@@ -37,16 +39,45 @@ const render = (arr, node) => {
 
 elForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
+
+  if(elInput.value != ''){
+    fetchFunc();
+  }
+});
+
+function fetchFunc() {
+  if(activePage == 1) {
+    elPrevBtn.setAttribute("disabled", "true")
+  }
+  else {
+    elPrevBtn.removeAttribute("disabled")
+  }
   fetch(
-    `https://www.omdbapi.com/?i=tt3896198&apikey=e7f9c222&s=${elInput.value}`
+    `https://www.omdbapi.com/?i=tt3896198&apikey=e7f9c222&s=${elInput.value}&page=${activePage}`
   )
     .then((response) => response.json())
     .then((data) => {
       if (data) {
         render(data.Search, elList);
       }
-    });
-  elInput.value = "";
 
-  render(todos, elList);
-});
+      if(activePage == Math.ceil(data.totalResults / 10)) {
+        elNextBtn.setAttribute("disabled", "true")
+      }else {
+        elNextBtn.removeAttribute("disabled")
+      }
+    });
+}
+
+const elPrevBtn = document.querySelector(".js-prev")
+const elNextBtn = document.querySelector(".js-next")
+
+elPrevBtn.addEventListener("click", () => {
+  activePage--;
+  fetchFunc()
+})
+
+elNextBtn.addEventListener("click", () => {
+  activePage++;
+  fetchFunc()
+})
